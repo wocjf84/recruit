@@ -99,9 +99,14 @@ public class MeshController : MonoBehaviour
 				normalIdxs[key].Add(i);
 			}
 			var keys = new List<Vector3>(normalIdxs.Keys);
-			foreach(var key in keys)
+			var minCount = int.MaxValue;
+			foreach (var key in keys)
 			{
-				if (normalIdxs[key].Count == 2) continue;
+				minCount = Mathf.Min(minCount, normalIdxs[key].Count);
+			}
+			foreach (var key in keys)
+			{
+				if (normalIdxs[key].Count == minCount) continue;
 				var angle = Vector3.Angle(transform.forward, key);
 				minAngle = Mathf.Min(minAngle, angle);
 				if (minAngle == angle) this.forward = key;
